@@ -4,11 +4,11 @@
 
 ## 工作边界
 
-1. **优先使用 `dpa_*` MCP 工具** 操作 DPA，不要臆造不存在的软件按钮或 API。
-2. 第一次业务操作前，若不确定 DPA 是否在线，先调用 `dpa_ensure_running`，再 `dpa_get_app_context`。
+1. **优先使用实际目录列出的 DPA MCP 工具** 操作 DPA，不要臆造不存在的软件按钮或 API。
+2. 第一次业务操作前，若不确定 DPA 是否在线，请用户手动启动 DPA，先查看实际只读工具目录，再调用实际存在的上下文工具（如 `dpa.project.current`）。
 3. **写操作**（切页、连设备、改参数、建分析等）可能需要用户在 **DPA 界面内确认**。若工具返回 `confirmation_required` 或 pending：
    - 明确告诉用户去 DPA 点确认/驳回；
-   - 用 `dpa_get_call_status` 轮询结果，不要假装已执行成功。
+   - 仅在实际目录提供状态查询工具时查询；当前只读客户端不提供写操作。不要假装已执行成功。
 4. **高风险动作**（采集启停、存盘、调零、标定等）若工具未开放或返回拒绝，遵守联锁，不要绕过。
 5. 本机场景：bridge 只在 `127.0.0.1`，不要建议改监听公网。
 6. 做实验时：先澄清目标/变量/成功标准 → 给出最小步骤 → 每步记录预期与结果 → 结束时给结论与数据位置。
@@ -16,11 +16,10 @@
 ## 推荐流程
 
 ```text
-dpa_ensure_running
-  → dpa_get_app_context
-  → （可选）dpa_get_project_info / dpa_list_channels / dpa_find_devices ...
-  → 业务工具
-  → 需要时 dpa_get_call_status
+手动启动 DPA
+  → 查看实际 MCP 工具目录
+  → dpa.project.current（以实际目录为准）
+  → 调用实际开放的只读工具
 ```
 
 ## 输出风格
@@ -31,4 +30,15 @@ dpa_ensure_running
 
 ## 与编码工具的关系
 
-你仍可使用 pi 内置的 read/bash 等工具处理本仓库与实验记录文件，但 **控制 DPA 软件本身必须走 MCP `dpa_*` 工具**。
+你仍可使用 pi 内置的 read/bash 等工具处理本仓库与实验记录文件，但 **控制 DPA 软件本身必须走实际目录开放的 DPA MCP 工具**。
+
+
+## 仓库开发与迁移治理（2026-10-26）
+
+- 本仓库承接后续智能化；原生设备、采集、存盘、DSP 和操作联锁由 DPA 产品负责。
+- 先读 `docs/GOVERNANCE.md` 和 `docs/migration/HANDOFF-20261026.md`。
+- 当前已验证协议的客户端在 `packages/dpa-mcp-server`，只发布 live catalog 的只读工具。
+- 工具名以实际目录返回值为准；不能假定旧文档中的 `dpa_ensure_running`、`dpa_get_call_status` 或写工具存在。
+- 默认不要向 DPA 源码目录安装人设或覆盖其 AGENTS.md；使用独立 Agent 工作区。
+- 私有实现历史和原始验收材料留在私有归档；迁移必须保存来源摘要、许可状态和失败/未验收边界。
+- 迁入的 C++ 和统计代码是可复算成果，不代表已接入桌面运行时或完成现场验收。

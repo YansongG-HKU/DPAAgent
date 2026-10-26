@@ -15,6 +15,9 @@ build/icon.png
 # Keep docs/DPA-AGENT.md tracked (DPA Agent guide for this repo)
 docs/*
 !docs/DPA-AGENT.md
+!docs/GOVERNANCE.md
+!docs/migration/
+!docs/migration/**
 
 # Root-level audit dumps (canonical copy under docs/audit/)
 audit-report-*.md
@@ -79,3 +82,9 @@ scripts/rewrite-commit-messages.txt
 scripts/fix-arrow-syntax.py*.tgz
 scripts/git-rewrite-public-main.ps1
 scripts/git-rewrite-public-main.sh
+
+# Local agent workspaces and generated migrated-client assets
+.dpa-workspace/
+packages/dpa-mcp-server/dist/
+packages/dpa-mcp-server/node_modules/
+tools/stats-sidecar/__pycache__/

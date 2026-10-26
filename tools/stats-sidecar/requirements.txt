@@ -1,0 +1,6 @@
+# Read-only statistics sidecar. Keep these dependencies isolated from the Qt
+# application; the sidecar emits only bounded statistics JSON and never sees
+# raw waveforms, device access, or credentials.
+numpy>=2.0
+scipy>=1.11
+scikit-learn>=1.4

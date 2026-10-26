@@ -1,25 +1,15 @@
 {
-  "settings": {
-    "toolPrefix": "none",
-    "idleTimeout": 30,
-    "requestTimeoutMs": 90000,
-    "directTools": true
-  },
   "mcpServers": {
     "dpa": {
       "command": "node",
       "args": [
-        "F:/Work/DPA-2026/tools/dpa-mcp/server.js"
+        "packages/dpa-mcp-server/dist/index.js"
       ],
-      "lifecycle": "eager",
-      "idleTimeout": 60,
-      "requestTimeoutMs": 90000,
       "directTools": true,
+      "requestTimeoutMs": 90000,
       "env": {
-        "DPA_LAUNCHER_PATH": "F:/Work/DPA-2026/x64/Debug/Launcher.exe",
         "DPA_MCP_TIMEOUT_MS": "90000"
-      },
-      "debug": false
+      }
     }
   }
 }

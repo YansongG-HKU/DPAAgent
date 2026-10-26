@@ -1,0 +1,41 @@
+{
+  "schema": "dpa.diagnostic-dataset-evaluation",
+  "version": 1,
+  "dataset": {
+    "id": "dpa-authorized-rotating-machinery",
+    "version": "0.1.0",
+    "title": "Authorized rotating-machinery diagnostic evaluation inventory",
+    "owner": "pending-domain-owner",
+    "authorization_policy": "Only locally held samples with documented use authority, byte hash, measurement provenance and domain-reviewed ground truth may be added. Empty records are intentional until authorized evidence exists."
+  },
+  "preregistration": {
+    "registered_utc": "2026-09-04T00:00:00Z",
+    "partition_policy": "rule_development_locked_evaluation",
+    "required_fault_classes": [
+      "normal",
+      "imbalance",
+      "misalignment",
+      "looseness",
+      "bearing_outer",
+      "bearing_inner",
+      "bearing_ball",
+      "bearing_cage"
+    ],
+    "minimum_locked_samples_per_class": 30,
+    "confidence_level": 0.95
+  },
+  "evaluation": {
+    "algorithm_version": "dpa-spectral-diagnostic/1.1.0",
+    "rule_version": "dpa-vibration-rules/1.2.0",
+    "executed_utc": null
+  },
+  "domain_approval": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_utc": null,
+    "evidence_ref": null,
+    "evidence_sha256": null,
+    "evidence_bytes": null
+  },
+  "samples": []
+}

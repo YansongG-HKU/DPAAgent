@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bundle Name="ViewModelAgent" Dll="ViewModelAgent.dll" Version="1.0.0.0" Level="350">
+  <Extension Point="VM">
+    <Node Name="AgentChat" RegisterClassName="VMAgentChat" RegisterClassType="VMAgentChat"
+          Description="AI 助手对话 VM" Priority="3" Version="1.0.0.0"/>
+  </Extension>
+</Bundle>

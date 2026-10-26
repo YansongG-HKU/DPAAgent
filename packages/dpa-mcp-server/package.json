@@ -1,0 +1,21 @@
+{
+  "name": "dpa-mcp-server",
+  "version": "0.2.0",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "dpa-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "self-check": "npm run build && node dist/self-check.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.5.0"
+  }
+}
