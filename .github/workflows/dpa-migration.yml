@@ -1,0 +1,43 @@
+name: DPA migration contracts
+on:
+  pull_request:
+  push:
+    branches: [master]
+permissions:
+  contents: read
+jobs:
+  migration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: python scripts/verify-dpa-migration.py
+      - run: npm ci --ignore-scripts --prefix packages/dpa-mcp-server
+      - run: npm run self-check --prefix packages/dpa-mcp-server
+      - run: python -m unittest discover -s tools/stats-sidecar -p test_monitor_analysis.py
+      - run: g++ -std=c++17 -Wall -Wextra -Werror legacy/dpa-domain/EnvelopeAnalysis.cpp legacy/dpa-domain/envelope_smoke.cpp -o /tmp/envelope-check && /tmp/envelope-check
+  windows-setup:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --prefix packages/dpa-mcp-server
+      - run: npm run self-check --prefix packages/dpa-mcp-server
+      - name: Verify isolated setup and preservation of existing workspace files
+        shell: powershell
+        run: |
+          $workspace = Join-Path $env:RUNNER_TEMP "dpa-agent-setup-test"
+          ./scripts/setup-dpa-agent.ps1 -AgentWorkspace $workspace -SkipNpmInstall
+          $config = Join-Path $workspace ".mcp.json"
+          $instructions = Join-Path $workspace "AGENTS.md"
+          $parsed = Get-Content $config -Raw | ConvertFrom-Json
+          if (-not [IO.Path]::IsPathRooted($parsed.mcpServers.dpa.args[0])) { throw "Server path must be absolute" }
+          $beforeConfig = (Get-FileHash $config -Algorithm SHA256).Hash
+          $beforeInstructions = (Get-FileHash $instructions -Algorithm SHA256).Hash
+          ./scripts/setup-dpa-agent.ps1 -AgentWorkspace $workspace -SkipNpmInstall
+          if ((Get-FileHash $config -Algorithm SHA256).Hash -ne $beforeConfig) { throw "Existing MCP config changed" }
+          if ((Get-FileHash $instructions -Algorithm SHA256).Hash -ne $beforeInstructions) { throw "Existing instructions changed" }

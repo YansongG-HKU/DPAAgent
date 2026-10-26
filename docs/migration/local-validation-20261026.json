@@ -1,0 +1,39 @@
+{
+  "schema": "dpaagent.handoff-validation/v1",
+  "date": "2026-10-26",
+  "source_receipts": 203,
+  "byte_identical_sources": 199,
+  "documented_source_modifications": 4,
+  "source_blob_size_sha256_verification": "passed",
+  "mcp_build_and_simulated_bridge_self_check": "passed",
+  "mcp_checks": [
+    "read-only catalog filtering",
+    "reject write/unlisted calls without posting",
+    "reject off-loopback endpoints",
+    "reject redirects",
+    "missing-manifest/no-read-token handling"
+  ],
+  "offline_monitor_unittests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "hilbert_envelope_analytical_checks": "passed",
+  "full_unittest_discovery": {
+    "passed": 12,
+    "failed": 2,
+    "failure_reason": "Optional BayBE runtime is absent; original tests intentionally fail instead of skip. No failure was changed to passing."
+  },
+  "not_executed": [
+    "full Electron build/startup",
+    "Windows/Qt application build/startup",
+    "real DPA bridge acceptance",
+    "real model acceptance",
+    "licensed domain and physical device acceptance",
+    "PowerShell setup execution"
+  ],
+  "dependency_limits": [
+    "BayBE and viblearn are absent; scientific branches are not all accepted."
+  ],
+  "publication_scope": "Curated text-only application/scientific/client source and synthetic fixtures; private Git ancestry and runtime evidence excluded.",
+  "full_stats_sidecar_self_test": "passed: robustness, published reference values, Monte Carlo alpha checks, optimizer contracts, deterministic suggestions, objective direction and subprocess protocol"
+}

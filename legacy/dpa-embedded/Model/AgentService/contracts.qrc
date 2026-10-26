@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/dpa/contracts">
+    <file alias="experiment-objective.schema.json">../../docs/experiment-objective.schema.json</file>
+  </qresource>
+</RCC>

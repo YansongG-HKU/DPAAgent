@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bundle Name="ViewAgent" Dll="ViewAgent.dll" Version="1.0.0.0" Level="481">
+  <Extension Point="RibbonPage">
+    <Node Name="AI助手" RegisterClassName="RibbonPageAgent" Description="AI 助手" Priority="9" Version="1.0.0.0"/>
+  </Extension>
+  <Extension Point="QDockWidget">
+    <Node Name="AgentChat" RegisterClassName="AgentChatDock" Description="AI 助手对话面板" Priority="1" Version="1.0.0.0"/>
+  </Extension>
+</Bundle>
